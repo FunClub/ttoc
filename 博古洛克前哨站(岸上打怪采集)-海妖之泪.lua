@@ -1,4 +1,4 @@
-local Bot = TTOCInitScript("自定义打怪模板1029")
+local Bot = TTOCInitScript("博古洛克前哨站-海妖之泪")
 local Log = Bot.Log
 local UI = Bot.UI
 local Config = Bot.Config
@@ -7,28 +7,11 @@ local TTOC = ...
 SC = TTOC
    
 local text = {
-      {Log='Info',Text="初始化战斗循环"},
-      {If = "SC:GetPlayer().Class=='MAGE'",End = '法师不售卖' },
-      {Settings = 'DoNotSellList', value = {'Rune of','传送','Hearthstone','炉石','Mining Pick','矿工锄','Skinning Knife','剥皮小刀','Primal','源生','Mote of','微粒','Air','空气','基尔加丹印记',"Mark of Kil'jaeden","Thieves'Tools",'潜行者工具','Flash Powder','闪光粉'}},
-      {End = "法师不售卖"},
-
-      {If = "SC:GetPlayer().Class == 'ROGUE' or SC:GetPlayer().Class == 'WARRIOR'",End = '近战不售卖' },
-      {Settings = 'DoNotSellList', value = {'Rune of','传送','Hearthstone','炉石','Skinning Knife','剥皮小刀','Mining Pick','矿工锄','Primal','源生','Mote of','微粒','Air','空气','基尔加丹印记',"Mark of Kil'jaeden","Thieves'Tools",'潜行者工具','Flash Powder','闪光粉','Smoked Talbuk Venison','熏烤塔布羊排','Roasted Quail','烤鹌鹑','Bladespire Bagel','刀塔面圈','Clefthoof Ribs','裂蹄肋排','Homemade Cherry Pie','自制樱桃馅饼',"Mag'har Grainbread",'玛格汉面包',}},
-      --售卖
-      --{Settings = 'ForceSellList', value = {'亚麻布','毛料','丝绸','魔纹布','符文布','Linen Cloth','Wool Cloth','Silk Cloth','Mageweave Cloth','Runecloth'}},
-      {End = "近战不售卖"},
-
-      {If = "SC:GetPlayer().Class == 'SHAMAN' or SC:GetPlayer().Class == 'PRIEST' or SC:GetPlayer().Class == 'HUNTER' or SC:GetPlayer().Class == 'DRUID' or SC:GetPlayer().Class == 'PALADIN' or SC:GetPlayer().Class == 'WARLOCK'",End = '有蓝职业不售卖' },
-      {Settings = 'DoNotSellList', value = {'Rune of','传送','Hearthstone','炉石','Skinning Knife','剥皮小刀','Mining Pick','矿工锄','Primal','源生','Mote of','微粒','Air','空气','基尔加丹印记',"Mark of Kil'jaeden",'Smoked Talbuk Venison','熏烤塔布羊排','Roasted Quail','烤鹌鹑','Bladespire Bagel','刀塔面圈','Clefthoof Ribs','裂蹄肋排','Homemade Cherry Pie','自制樱桃馅饼',"Mag'har Grainbread",'玛格汉面包',}},
-      --售卖
-      --{Settings = 'ForceSellList', value = {'亚麻布','毛料','丝绸','魔纹布','符文布','Linen Cloth','Wool Cloth','Silk Cloth','Mageweave Cloth','Runecloth',}},
-      {End = "有蓝职业不售卖"},
-
       {If = "SC:GetPlayer().Class == 'HUNTER'", End = '猎人恢复设置'},
       --恢复生命值范围
       {Settings = 'FoodPercent', value = {70,85 ,}},
       --恢复法力值范围
-      {Settings = 'DrinkPercent', value = {10 ,40 ,}},
+      {Settings = 'DrinkPercent', value = {30 ,85 ,}},
       {End = '猎人恢复设置'},
       
       {If = "SC:GetPlayer().Class == 'ROGUE' or SC:GetPlayer().Class == 'WARRIOR'", End = '战士盗贼恢复设置'},
@@ -42,21 +25,21 @@ local text = {
       --恢复生命值范围
       {Settings = 'FoodPercent', value = {70,85 ,}},
       --恢复法力值范围
-      {Settings = 'DrinkPercent', value = {50 ,85 ,}},
+      {Settings = 'DrinkPercent', value = {30 ,85 ,}},
       {End = '有蓝职业恢复设置'},
 
       {If = "SC:GetPlayer().Level >= 58 and SC:GetPlayer().Class == 'SHAMAN' or SC:GetPlayer().Class == 'PRIEST' or SC:GetPlayer().Class == 'HUNTER' or SC:GetPlayer().Class == 'DRUID' or SC:GetPlayer().Class == 'PALADIN' or SC:GetPlayer().Class == 'WARLOCK'", End = '有蓝职业恢复设置1'},
       --恢复生命值范围
       {Settings = 'FoodPercent', value = {70,85 ,}},
       --恢复法力值范围
-      {Settings = 'DrinkPercent', value = {50 ,85 ,}},
+      {Settings = 'DrinkPercent', value = {30 ,85 ,}},
       {End = '有蓝职业恢复设置1'},
 
       {If = "SC:GetPlayer().Level < 15 and SC:GetPlayer().Class == 'WARLOCK'", End = '术士职业恢复设置'},
       --恢复生命值范围
       {Settings = 'FoodPercent', value = {70,85 ,}},
       --恢复法力值范围
-      {Settings = 'DrinkPercent', value = {50 ,85 ,}},
+      {Settings = 'DrinkPercent', value = {30 ,85 ,}},
       {End = '术士职业恢复设置'},
 
       {If = "SC:GetPlayer().Level >= 15 and SC:GetPlayer().Class == 'WARLOCK'", End = '术士职业恢复设置1'},
@@ -104,12 +87,12 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['冲击波'] = false"},
             {Run = "DMW.Settings.profile.Rotation['燃烧'] = false"},
             {Run = "DMW.Settings.profile.Rotation['灼烧'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['冰霜新星'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['冰霜新星'] = false"},
             {Run = "DMW.Settings.profile.Rotation['冰霜新星时后退'] = true"},
             {Run = "DMW.Settings.profile.Rotation['水元素冰霜新星'] = true"},
             {Run = "DMW.Settings.profile.Rotation['宠物自动攻击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['让宠物自动攻击目标'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['冰锥术'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['冰锥术'] = false"},
             {Run = "DMW.Settings.profile.Rotation['龙息术'] = false"},
             {Run = "DMW.Settings.profile.Rotation['冰枪术'] = true"},
             {Run = "DMW.Settings.profile.Rotation['奥术飞弹'] = false"},
@@ -122,7 +105,7 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['唤醒'] = true"},
             {Run = "DMW.Settings.profile.Rotation['唤醒法力值百分比'] = 35"},
             {Run = "DMW.Settings.profile.Rotation['解除次级诅咒'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['变形术'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['变形术'] = false"},
             {Run = "DMW.Settings.profile.Rotation['使用法术石'] = true"},
             {Run = "DMW.Settings.profile.Rotation['制造法力石'] = true"},
             {Run = "DMW.Settings.profile.Rotation['法术石法力值'] = 60"},
@@ -176,11 +159,11 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['自动雄鹰守护'] = true"},
             {Run = "DMW.Settings.profile.Rotation['自动灵猴守护'] = true"},
             {Run = "DMW.Settings.profile.Rotation['多重射击'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['奥术射击'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['奥术射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['猎人印记'] = true"},
             {Run = "DMW.Settings.profile.Rotation['急速射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['瞄准射击'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['稳固射击'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['稳固射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['逃脱'] = true"},
             {Run = "DMW.Settings.profile.Rotation['假死'] = true"},
             {Run = "DMW.Settings.profile.Rotation['狂野怒火'] = true"},
@@ -188,7 +171,7 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['猫鼬撕咬'] = true"},
             {Run = "DMW.Settings.profile.Rotation['摔绊'] = false"},
             {Run = "DMW.Settings.profile.Rotation['杀戮命令'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['毒蛇钉刺'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['毒蛇钉刺'] = true"},
             {Run = "DMW.Settings.profile.Rotation['宠物自动攻击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['召唤宠物'] = true"},
             {Run = "DMW.Settings.profile.Rotation['复活宠物'] = true"},
@@ -597,72 +580,203 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['狂暴生命值'] = 90"},
             {Log='Info',Text="初始化完成"},
       {End = 0.12},
-      {Replace = 'text2'},
+      {Replace = 'mainScript'},
 }
 
-local text2 = {
-      {If = "SC:GetPlayer().Class == 'HUNTER' and SC:GetPlayer().Level >= 1 and SC:GetPlayer().Level < 10", End = '猎人购买弹药400'},
-      --弹药数量
-      {Settings = 'AmmoAmount', value = 400},
-      {End = '猎人购买弹药400'},
+local LT_Util = {
+      hasDebuff = function (idOrName)
+            for i = 1, 40 do
+                local name, _, _, _, duration, expirationTime, unitCaster, _, _, spellId = UnitDebuff('player', i)
+                if name then
+                    if type(idOrName) == 'string' and idOrName == name then
+                        return true
+                    end
+        
+                    if type(idOrName) == 'number' and idOrName == spellId then
+                        return true
+                    end
+                end
+            end
+            return false
+        end,
+      hasBuff = function (idOrName)
+            for i = 1, 40 do
+                local name, _, _, _, duration, expirationTime, unitCaster, _, _, spellId = UnitBuff('player', i)
+                if name then
+                    if type(idOrName) == 'string' and idOrName == name then
+                        return true
+                    end
+        
+                    if type(idOrName) == 'number' and idOrName == spellId then
+                        return true
+                    end
+                end
+            end
+            return false
+      end,
+    
+  
 
-      {If = "SC:GetPlayer().Class == 'HUNTER' and SC:GetPlayer().Level >= 10 and SC:GetPlayer().Level < 30", End = '猎人购买弹药1000'},
-      --弹药数量
-      {Settings = 'AmmoAmount', value = 1000},
-      {End = '猎人购买弹药1000'},
+}
+local LT = {
+      --[[
+            使用BUFF物品
+            itemName=物品名,BuffName=Buff名称
+      --]]
+      useBuffItem = function (itemName)
+            if itemName == '' then
+                 return
+            end
+            local itemBuffMap = {
+                  ['特效敏捷药剂'] = '特效敏捷' ,
+                  ['极效敏捷药剂'] = '极效敏捷' ,
+                  ['法术能量药剂'] = '法能药剂' ,
+                  ['法能药剂'] = '法能药剂' ,
+                  ['特效魔血药剂'] = '强效法力回复' ,
+                  ['极效魔血药剂'] = '强效法力回复'  
+            }
+            local buffName;
+            for key, value in pairs(itemBuffMap) do
+                 if key == itemName then
+                        buffName = value
+                        break
+                 end
+            end
+             ;
+            if GetItemCount(itemName,false,false)>0 and not LT_Util.hasBuff(buffName) and not LT_Util.hasDebuff('鬼魂')  then
+                  print('吃['..itemName..']')
+                  RunMacroText('/use '..itemName)
+                  TTOCDelay(1)
+            end
+      end,
 
-      {If = "SC:GetPlayer().Class == 'HUNTER' and SC:GetPlayer().Level >= 30 and SC:GetPlayer().Level <= 70", End = '猎人购买弹药1600'},
-      --弹药数量
-      {Settings = 'AmmoAmount', value = 1800},
-      {End = '猎人购买弹药1600'},
-      
+      --[[
+            给武器使用临时附魔物品
+            itemName=物品名,BuffName=Buff名称
+      --]]
+      addWeaponEnchant = function (itemName)
+            if itemName == '' then
+                  return
+             end
+            local hasEnchant,_ = GetWeaponEnchantInfo()
+            if(not hasEnchant and not SC:GetPlayer().InCombat and not  SC:GetPlayer().IsDead ) then
+                  print("使用武器附魔["..itemName..']')
+                  RunMacroText('/use [button:1] '..itemName)
+                  RunMacroText('/use [button:1] 16')
+                  TTOCDelay(1)
+            end
+      end,
+
+     
+}
+
+
+
+--[[
+      使用背包里的BUFF物品
+--]]
+local function useBuff()
+      LT.useBuffItem(UI:Setting('战斗药剂'))
+      LT.useBuffItem(UI:Setting('守护药剂'))
+      LT.addWeaponEnchant(UI:Setting('武器涂油'))
+end
+
+local mainScript = {
+     
       --大于1级小于71级循环打怪
-      {If = "SC:GetPlayer().Level >= 1 and SC:GetPlayer().Level < 71", End = '自定义打怪'},
-            {Run = 'print("打怪开始")'},
+      {If = "SC:GetPlayer().Level >= 1 and SC:GetPlayer().Level <= 80", End = '自定义打怪'},
+            {Run = function ()
+                  useBuff()
+            end},
+            {If = "GetItemCount('冬鳞蚌壳',false,false)>=100", End = '购买海妖之泪'},
+                  {Run = 'print("购买海妖之泪")'},
+                  {MoveTo = {4366.9658, 6089.8257, 0.6821,true},},
+                  {UnitInteract = 25206},
+                  {Gossip = "vendor"},
+                  {Run='BuyItem(36784,1)'},
+                  {Delay = 5},
+                  {Run = function ()
+                        CloseMerchant()--关闭商人窗口
+                  end},
+            {Loop = '购买海妖之泪'},
             --回家路径避免卡位 如果回家时候卡位用
             {Settings = 'GoHomePath', value = {
-                  --{2235.0337, 252.1912, 33.6516},
-                  --{2235.0337, 252.1912, 33.6516},
+                  {4319.2847, 6061.2754, 0.9000},
+                  {4284.3032, 5865.4443, 59.3179},
             },},
             --离开家路径避免卡位 如果离开家时候卡位用
             {Settings = 'LeaveHomePath', value = {
-                  --{2235.0337, 252.1912, 33.6516},
-                  --{2235.0337, 252.1912, 33.6516},
+                  --{4383.1143, 6129.1177, 0.4630},
+
             },},
             {Settings = 'BuyNPC', value = {
-                  --食物商人    id是商人的npcid    后面的坐标是我站着对话商人的坐标
-                  {Id =5688  ,Path = {2269.5105, 244.9443, 34.2571}},
                   --修装的
-                  {Id =2135  ,Path = {2237.7668, 312.2936, 36.7219}},
+                  {Id =27067  ,Path = {4510.5200, 5703.3525, 81.5402}},
+                   --食物商人    id是商人的npcid    后面的坐标是我站着对话商人的坐标
+                  {Id =27069  ,Path = {4506.3574, 5707.3179, 81.5212}},
                   --弓箭商人
-                  {Id =2134  ,Path = {2253.0049, 269.9004, 34.2600}},
+                  {Id =27058  ,Path = {4502.2437, 5757.5645, 81.5365}},
             }},
             --是否判断回城事件
             {Settings = 'GoHomeEvent', value = true},
-            --打怪循环设置
-            {AttackMonster = {0000,0000} , Count = 1 ,  --0000,0000是要打的怪物id
-            MoveTo = {--0000.0000,0000.0000,0000.0000 是要巡逻的坐标
-                  {{ 0000.0000,0000.0000,0000.0000},},
-                  {{ 0000.0000,0000.0000,0000.0000},},
-                  {{ 0000.0000,0000.0000,0000.0000},},
-            }, Random = 0 ,FindPath =true,
-            },
+             --采集循环设置
+             {GatherHerb = {187367} , Count = 1 ,Distance=30, --0000,0000是要打的怪物id
+                  MoveTo = {--0000.0000,0000.0000,0000.0000 是要巡逻的坐标
+                  { { 4280.0137, 6208.1113, 0.6689 }, },
+                  { { 4293.3550, 6291.7603, 0.4832}, },
+                  { { 4289.0254, 6382.9878, 0.5680 }, },
+                  { { 4234.7998, 6327.8794, 2.3449 }, },
+                  { { 4192.5449, 6194.8223, 8.4572 }, },
+                  }, Random = 0 ,FindPath =true,
+             },
+              --打怪循环设置
+              {AttackMonster = {25217,25215,25216} , Count = 1 ,  --0000,0000是要打的怪物id
+                  MoveTo = {--0000.0000,0000.0000,0000.0000 是要巡逻的坐标
+                  { { 4280.0137, 6208.1113, 0.6689 }, },
+                  { { 4293.3550, 6291.7603, 0.4832}, },
+                  { { 4289.0254, 6382.9878, 0.5680 }, },
+                  { { 4234.7998, 6327.8794, 2.3449 }, },
+                  { { 4192.5449, 6194.8223, 8.4572 }, },
+                  }, Random = 0 ,FindPath =true,
+              },
+          
+           
       {Loop = '自定义打怪'},
-      }
 
+      
+}
+
+
+local function init()
+--       local u = SC:GetPlayer().Buffs
+     
+    
+--      for index,item in pairs(u) do 
+--          print(index)
+--      end
+
+      
+end
+-- 初始化界面
+local function initUI()
+      if not UI:GetWidget('基本配置')then
+            UI:AddLabel('背包放战斗、守护药剂、武器油，会自动使用')
+            UI:AddInput('战斗药剂')
+            UI:AddInput('守护药剂') 
+            UI:AddInput('武器涂油') 
+      end
+end
 --加入脚本
 Bot:AddQuest('text',text)
 --加入脚本
-Bot:AddQuest('text2',text2)
+Bot:AddQuest('mainScript',mainScript)
+
 --设定第一个执行的脚本
 Bot:SetFirstQuest('text')
 Bot:SetStart(function()
-    Config:Hide()
+     Config:Hide()
       --最先执行的地方，不会被自动化（吃喝穿装等）插队
-      Log:System('=======================')
-      Log:System("自定义打怪1029开始")
-      Log:System("Custom Daguai 1029 starts")
-      Log:System('=======================')
+      Log:System("《博古洛克前哨站-海妖之泪》开始")
       Bot:SetPulse(Bot.QuestScriptPulse)
       SetPulseTime(0.1)
       --自动调整帧数
@@ -670,512 +784,11 @@ Bot:SetStart(function()
       SetCVar("maxFPSBk", 50)
       SetDMWHUD('Rotation',true) --DMW
       local LearnThisTalentList = {}
-      --自动加天赋
-      if SC:GetPlayer().Class=='MAGE' then
-            LearnThisTalentList = {
-                  {303, 3},-- 三点元素精准  
-                  {302, 5},-- 五点强化寒冰箭 
-                  {305, 3},-- 三点霜寒刺骨 
-                  {306, 2},-- 两点强化冰霜新星 
-                  {308, 3},-- 三点刺骨寒冰 
-                  {313, 5},-- 五点碎冰 
-                  {304, 5}, -- 五点寒冰碎片 
-                  {316, 3},-- 三点强化冰锥术
-                  {315, 1},-- 一点急速冷却 
-                  {319, 1},-- 一点寒冰护体 
-                  {320, 5},-- 五点极寒之风 
-                  {321, 5},-- 五点寒冰箭增效 
-                  {317, 2},-- 两点浮冰  
-                  {322, 1},-- 一点召唤水元素 
-                  {309, 1},-- 一点冰冷血脉 
-                  {318, 5},-- 五点深冬之寒  
-                  {312, 3},-- 三点冰霜导能 
-                  {311, 2},-- 两点极寒延伸 
-                  {307, 3},-- 三点极寒冰霜 
-                  {314, 1},-- 冰冻之心*1
-            }
-      end
-      if SC:GetPlayer().Class=='ROGUE' then
-            LearnThisTalentList = {
-                  {102, 2}, --冷酷攻击2点
-                  {202, 2}, --强化影袭2点
-                  {101, 3}, --强化刺骨3点
-                  {103, 5}, --恶意5点
-                  {109, 5}, --致命偷袭5点
-                  {203, 5}, --闪电反射5点
-                  {206, 5}, --精确5点
-                  {205, 5}, --偏斜5点
-                  {208, 1}, --还击1点
-                  {212, 5}, --双武器专精5点
-                  {214, 1}, --剑刃乱舞1点
-                  {209, 1}, --强化疾跑1点
-                  {207, 1}, --耐久1点
-                  {218, 2}, --武器专家2点
-                  {219, 3}, --侵犯3点
-                  {221, 1}, --冲动1点
-                  {217, 2}, --剑刃飞转2点
-                  {220, 2}, --活力2点
-                  {223, 5}, --战斗潜能5点
-                  {224, 1}, --突袭1点
-            }
-      end
-      if SC:GetPlayer().Class=='HUNTER' then
-            LearnThisTalentList = {
-                  {102, 1}, --耐久训练5点
-                  {102, 2}, --耐久训练5点
-                  {102, 3}, --耐久训练5点
-                  {102, 4}, --耐久训练5点
-                  {102, 5}, --耐久训练5点
-                  {105, 1}, --厚皮3点
-                  {105, 2}, --厚皮3点
-                  {105, 3}, --厚皮3点
-                  {103, 1}, --火力集中2点
-                  {103, 2}, --火力集中2点
-                  {109, 1}, --狂怒释放2点
-                  {109, 2}, --狂怒释放2点
-                  {109, 3}, --狂怒释放3点
-                  {111, 1}, --凶暴5点
-                  {111, 2}, --凶暴5点
-                  {111, 3}, --凶暴5点
-                  {111, 4}, --凶暴5点
-                  {111, 5}, --凶暴5点
-                  {113, 1}, --胁迫1点
-                  {114, 1}, --野兽戒律2点
-                  {114, 2}, --野兽戒律2点
-                  {112, 1}, --灵魂联结2点
-                  {112, 2}, --灵魂联结2点
-                  {116, 1}, --狂乱5点
-                  {116, 2}, --狂乱5点
-                  {116, 3}, --狂乱5点
-                  {116, 4}, --狂乱5点
-                  {116, 5}, --狂乱5点
-                  {118, 1}, --狂野怒火1点
-                  {119, 1}, --猎豹反射3点
-                  {119, 2}, --猎豹反射3点
-                  {119, 3}, --猎豹反射3点
-                  {110, 1}, --强化治疗宠物2点
-                  {110, 2}, --强化治疗宠物2点
-                  {120, 1}, --蛇之迅捷5点
-                  {120, 2}, --蛇之迅捷5点
-                  {120, 3}, --蛇之迅捷5点
-                  {120, 4}, --蛇之迅捷5点
-                  {120, 5}, --蛇之迅捷5点
-                  {121, 1}, --野兽之心1点
-                  {106, 1}, --强化复活宠物2点
-                  {106, 2}, --强化复活宠物2点
-                  {115, 1}, --驭兽者2点
-                  {115, 2}, --驭兽者2点
-                  {202, 1}, --夺命射击5点
-                  {202, 2}, --夺命射击5点
-                  {202, 3}, --夺命射击5点
-                  {202, 4}, --夺命射击5点
-                  {202, 5}, --夺命射击5点
-                  {204, 1}, --效率5点
-                  {204, 2}, --效率5点
-                  {204, 3}, --效率5点
-                  {204, 4}, --效率5点
-                  {204, 5}, --效率5点
-                  {205, 1}, --直取要害2点
-                  {205, 2}, --直取要害2点
-                  {117, 1}, --凶猛灵感3点
-                  {117, 2}, --凶猛灵感3点
-            }
-      end
-      if SC:GetPlayer().Class=='PRIEST' then
-            LearnThisTalentList = {
-                  {301, 1}, --精神分流5点
-                  {301, 2}, --精神分流5点
-                  {301, 3}, --精神分流5点
-                  {301, 4}, --精神分流5点
-                  {301, 5}, --精神分流5点
-                  {102, 1}, --魔杖专精5点
-                  {102, 2}, --魔杖专精5点
-                  {102, 3}, --魔杖专精5点
-                  {102, 4}, --魔杖专精5点
-                  {102, 5}, --魔杖专精5点
-                  {304, 1}, --强化暗言术：痛2点
-                  {304, 2}, --强化暗言术：痛2点
-                  {302, 1}, --昏阙5点
-                  {302, 2}, --昏阙5点
-                  {302, 3}, --昏阙5点
-                  {308, 1}, --精神鞭笞1
-                  {307, 1}, --强化心灵震爆5点
-                  {307, 2}, --强化心灵震爆5点
-                  {307, 3}, --强化心灵震爆5点
-                  {307, 4}, --强化心灵震爆5点
-                  {307, 5}, --强化心灵震爆5点
-                  {311, 1}, --暗影之波4点
-                  {311, 2}, --暗影之波4点
-                  {311, 3}, --暗影之波4点
-                  {311, 4}, --暗影之波4点
-                  {313, 1}, --吸血鬼的拥抱1点
-                  {314, 1}, --强化吸血鬼的拥抱2点
-                  {314, 2}, --强化吸血鬼的拥抱2点
-                  {315, 1}, --心灵集中3点
-                  {315, 2}, --心灵集中3点
-                  {315, 3}, --心灵集中3点
-                  {302, 4}, --昏阙5点
-                  {302, 5}, --昏阙5点
-                  {311, 1}, --暗影之波5点
-                  {311, 2}, --暗影之波5点
-                  {311, 3}, --暗影之波5点
-                  {311, 4}, --暗影之波5点
-                  {311, 5}, --暗影之波5点
-                  {317, 1}, --黑暗1点
-                  {318, 1}, --暗影形态1点
-                  {319, 1}, --暗影能量5点
-                  {319, 2}, --暗影能量5点
-                  {319, 3}, --暗影能量5点
-                  {319, 4}, --暗影能量5点
-                  {319, 5}, --暗影能量5点
-                  {306, 1}, --强化心灵尖啸2点
-                  {306, 2}, --强化心灵尖啸2点
-                  {312, 1}, --沉默1点
-                  {317, 1}, --黑暗2点
-                  {317, 2}, --黑暗2点
-                  {321, 1}, --吸血鬼之触1点--45级
-                  {317, 1}, --黑暗5点
-                  {317, 2}, --黑暗5点
-                  {317, 3}, --黑暗5点
-                  {317, 4}, --黑暗5点
-                  {317, 5}, --黑暗5点
-                  {320, 1}, --悲惨5点
-                  {320, 2}, --悲惨5点
-                  {320, 3}, --悲惨5点
-                  {320, 4}, --悲惨5点
-                  {320, 5}, --悲惨5点
-                  {305, 1}, --暗影集中5点
-                  {305, 2}, --暗影集中5点
-                  {305, 3}, --暗影集中5点
-                  {305, 4}, --暗影集中5点
-                  {305, 5}, --暗影集中5点
-                  {310, 1}, --暗影延伸2点
-                  {310, 2}, --暗影延伸2点
-                  {105, 1}, --强化真言术：盾2点
-                  {105, 2}, --强化真言术：盾2点
-            }
-      end
-      if SC:GetPlayer().Class=='WARLOCK' then
-            LearnThisTalentList = {
-                  {203, 1},-- 五点恶魔之拥
-                  {203, 2},-- 五点恶魔之拥 
-                  {203, 3},-- 五点恶魔之拥 
-                  {203, 4},-- 五点恶魔之拥 
-                  {203, 5},-- 五点恶魔之拥 
-                  {205, 1},-- 三强化虚空行者 
-                  {205, 2},-- 三强化虚空行者 
-                  {205, 3},-- 三强化虚空行者 
-                  {204, 1},-- 两强化生命通道 
-                  {204, 2},-- 两强化生命通道 
-                  {206, 1},-- 3恶魔智力
-                  {206, 2},-- 3恶魔智力
-                  {206, 3},-- 3恶魔智力
-                  {209, 1},-- 三点恶魔耐力
-                  {209, 2},-- 三点恶魔耐力
-                  {209, 3},-- 三点恶魔耐力
-                  {208, 1},-- 1恶魔支配 
-                  {210, 1}, -- 1恶魔庇护 
-                  {211, 1},-- 2召唤大师
-                  {211, 2},-- 2召唤大师
-                  {212, 1},-- 5点邪恶强化
-                  {212, 2},-- 5点邪恶强化
-                  {212, 3},-- 5点邪恶强化
-                  {212, 4},-- 5点邪恶强化
-                  {212, 5},-- 5点邪恶强化
-                  {214, 1},-- 一点恶魔牺牲
-                  {217, 1},-- 五点恶魔学识大师 
-                  {217, 2},-- 五点恶魔学识大师 
-                  {217, 3},-- 五点恶魔学识大师 
-                  {217, 4},-- 五点恶魔学识大师 
-                  {217, 5},-- 五点恶魔学识大师 
-                  {219, 1},-- 1灵魂链接
-                  {216, 1},-- 3法力喂食
-                  {216, 2},-- 3法力喂食
-                  {216, 3},-- 3法力喂食
-                  {221, 1},-- 5恶魔战术
-                  {221, 2},-- 5恶魔战术
-                  {221, 3},-- 5恶魔战术
-                  {221, 4},-- 5恶魔战术
-                  {221, 5},-- 5恶魔战术
-                  {222, 1},-- 一点召唤恶魔卫士
-                  {218, 1},-- 3恶魔韧性
-                  {218, 2},-- 3恶魔韧性 
-                  {218, 3},-- 3恶魔韧性
-                  {102, 1},-- 5强化腐蚀术
-                  {102, 2},-- 5强化腐蚀术
-                  {102, 3},-- 5强化腐蚀术
-                  {102, 4},-- 5强化腐蚀术
-                  {102, 5},-- 5强化腐蚀术
-                  {104, 1},-- 两点强化吸取灵魂
-                  {104, 2},-- 两点强化吸取灵魂
-                  {105, 1},-- 2强化生命分流
-                  {105, 2},-- 2强化生命分流
-                  {106, 1},-- 2灵魂虹吸
-                  {106, 2},-- 2灵魂虹吸
-                  {220, 1},-- 3恶魔知识
-                  {220, 2},-- 3恶魔知识
-                  {220, 3},-- 3恶魔知识
-                  {109, 1},-- 1诅咒增幅
-            }
-      end
-      if SC:GetPlayer().Class=='PALADIN' then
-            LearnThisTalentList = {
-                  {301, 1},-- 强化力量祝福
-                  {301, 2},-- 强化力量祝福
-                  {301, 3},-- 强化力量祝福
-                  {301, 4},-- 强化力量祝福
-                  {301, 5},-- 强化力量祝福
-                  {302, 1},-- 祈福 
-                  {302, 2},-- 祈福 
-                  {302, 3},-- 祈福
-                  {302, 4},-- 祈福
-                  {302, 5},-- 祈福
-                  {308, 1},-- 命令圣印
-                  {303, 1},-- 强化审判
-                  {303, 2},-- 强化审判
-                  {304, 1},-- 强化十字军圣印
-                  {304, 2},-- 强化十字军圣印
-                  {304, 3},-- 强化十字军圣印
-                  {307, 1},-- 定罪
-                  {307, 2},-- 定罪
-                  {307, 3},-- 定罪
-                  {307, 4},-- 定罪
-                  {314, 1},-- 命令圣印
-                  {315, 1},-- 强化圣洁光环
-                  {315, 2},-- 强化圣洁光环
-                  {307, 5},-- 定罪
-                  {309, 1},-- 正义追击   
-                  {316, 1},-- 复仇 
-                  {316, 2},-- 复仇 
-                  {316, 3},-- 复仇
-                  {316, 4},-- 复仇
-                  {316, 5},-- 复仇       
-                  {317, 1},-- 神圣审判 
-                  {317, 2},-- 神圣审判 
-                  {317, 3},-- 神圣审判          
-                  {309, 2},-- 正义追击                            
-                  {309, 3},-- 正义追击
-                  {319, 1},-- 忏悔
-                  {321, 1},-- 狂热
-                  {321, 2},-- 狂热
-                  {321, 3},-- 狂热
-                  {321, 4},-- 狂热
-                  {322, 1},-- 十字军打击
-                  {321, 5},-- 狂热
-                  {313, 1},-- 双手武器专精
-                  {313, 2},-- 双手武器专精
-                  {313, 3},-- 双手武器专精
-                  {317, 1},-- 神圣审判
-                  {317, 2},-- 神圣审判
-                  {317, 3},-- 神圣审判
-                  {312, 1},-- 征伐
-                  {312, 2},-- 征伐
-                  {312, 3},-- 征伐
-                  {202, 1},-- 盾牌壁垒
-                  {202, 2},-- 盾牌壁垒
-                  {202, 3},-- 盾牌壁垒
-                  {202, 4},-- 盾牌壁垒
-                  {202, 5},-- 盾牌壁垒
-                  {203, 1},-- 精确
-                  {203, 2},-- 精确
-                  {203, 3},-- 精确
-            }
-      end
-      if SC:GetPlayer().Class=='WARRIOR' then
-            LearnThisTalentList = {
-                  {202, 1},-- 残忍5点
-                  {202, 2},-- 残忍5点
-                  {202, 3},-- 残忍5点
-                  {202, 4},-- 残忍5点
-                  {202, 5},-- 残忍5点
-                  {204, 1},-- 怒不可遏5点
-                  {204, 2},-- 怒不可遏5点
-                  {204, 3},-- 怒不可遏5点
-                  {204, 4},-- 怒不可遏5点
-                  {204, 5},-- 怒不可遏5点
-                  {207, 1},-- 血之狂热3点
-                  {207, 2},-- 血之狂热3点
-                  {207, 3},-- 血之狂热3点
-                  {201, 1},-- 震耳噪音 2点
-                  {201, 2},-- 震耳噪音 2点
-                  {209, 1},-- 双武器专精 5点
-                  {209, 2},-- 双武器专精 5点
-                  {209, 3},-- 双武器专精 5点
-                  {209, 4},-- 双武器专精 5点
-                  {209, 5},-- 双武器专精 5点
-                  {211, 1},-- 激怒5点
-                  {211, 2},-- 激怒5点
-                  {211, 3},-- 激怒5点
-                  {211, 4},-- 激怒5点
-                  {211, 5},-- 激怒5点
-                  {216, 1},-- 乱舞5点
-                  {216, 2},-- 乱舞5点
-                  {216, 3},-- 乱舞5点
-                  {216, 4},-- 乱舞5点
-                  {216, 5},-- 乱舞5点
-                  {213, 1},-- 横扫攻击1点
-                  {218, 1},-- 嗜血1点                            
-                  {214, 1},-- 武器掌握1点
-                  {217, 1},-- 精确3点
-                  {217, 2},-- 精确3点
-                  {217, 3},-- 精确3点
-                  {220, 1},-- 强化狂暴姿态5点
-                  {220, 2},-- 强化狂暴姿态5点
-                  {220, 3},-- 强化狂暴姿态5点
-                  {220, 4},-- 强化狂暴姿态5点
-                  {220, 5},-- 强化狂暴姿态5点                                
-                  {221, 1},-- 暴怒1点
-                  {210, 1},-- 强化斩杀2点
-                  {210, 2},-- 强化斩杀2点
-                  {102, 1},-- 偏斜5点
-                  {102, 2},-- 偏斜5点
-                  {102, 3},-- 偏斜5点
-                  {102, 4},-- 偏斜5点
-                  {102, 5},-- 偏斜5点 
-                  {105, 1},-- 钢铁意志5点
-                  {105, 2},-- 钢铁意志5点
-                  {105, 3},-- 钢铁意志5点
-                  {105, 4},-- 钢铁意志5点
-                  {105, 5},-- 钢铁意志5点
-                  {108, 1},-- 愤怒掌握1点   
-                  {109, 1},-- 重伤3点
-                  {109, 2},-- 重伤3点
-                  {109, 3},-- 重伤3点
-                  {101, 1},-- 强化英勇打击1点
-                  {111, 1},-- 穿刺2点
-                  {111, 2},-- 穿刺2点
-            }
-      end
-      if SC:GetPlayer().Class=='DRUID' then
-            LearnThisTalentList = {
-                  {201, 1},-- 凶暴 5点
-                  {201, 2},-- 凶暴 5点
-                  {201, 3},-- 凶暴 5点
-                  {201, 4},-- 凶暴 5点
-                  {201, 5},-- 凶暴 5点
-                  {204, 1},-- 野蛮冲撞 2点
-                  {204, 2},-- 野蛮冲撞 2点
-                  {205, 1},-- 厚皮 3点
-                  {205, 2},-- 厚皮 3点
-                  {205, 3},-- 厚皮 3点
-                  {206, 1},-- 豹之迅捷 2点
-                  {206, 2},-- 豹之迅捷 2点
-                  {208, 1},-- 锋利兽爪 3点
-                  {208, 2},-- 锋利兽爪 3点
-                  {208, 3},-- 锋利兽爪 3点
-                  {211, 1},-- 原始狂怒 2点
-                  {211, 2},-- 原始狂怒 2点
-                  {210, 1},-- 猛兽攻击 3点
-                  {210, 2},-- 猛兽攻击 3点
-                  {210, 3},-- 猛兽攻击 3点
-                  {209, 1},-- 撕碎攻击 2点
-                  {209, 2},-- 撕碎攻击 2点
-                  {212, 1},-- 野蛮暴怒 2点
-                  {212, 2},-- 野蛮暴怒 2点
-                  {213, 1},-- 精灵之火 1点
-                  {215, 1},-- 野性之心 5点
-                  {215, 2},-- 野性之心 5点
-                  {215, 3},-- 野性之心 5点
-                  {215, 4},-- 野性之心 5点
-                  {215, 5},-- 野性之心 5点
-                  {218, 1},-- 兽群领袖 1点
-                  {219, 1},-- 强化兽群领袖 2点
-                  {219, 2},-- 强化兽群领袖 2点
-                  {216, 1},-- 适者生存 3点
-                  {216, 2},-- 适者生存 3点
-                  {216, 3},-- 适者生存 3点
-                  {220, 1},-- 狩猎天性 5点
-                  {220, 2},-- 狩猎天性 5点
-                  {220, 3},-- 狩猎天性 5点
-                  {220, 4},-- 狩猎天性 5点
-                  {220, 5},-- 狩猎天性 5点
-                  {221, 1},-- 裂伤 1点
-                  {301, 1},-- 强化野性印记 5点
-                  {301, 2},-- 强化野性印记 5点
-                  {301, 3},-- 强化野性印记 5点
-                  {301, 4},-- 强化野性印记 5点
-                  {301, 5},-- 强化野性印记 5点
-                  {303, 1},-- 自然主义 5点
-                  {303, 2},-- 自然主义 5点
-                  {303, 3},-- 自然主义 5点
-                  {303, 4},-- 自然主义 5点
-                  {303, 5},-- 自然主义 5点
-                  {308, 1},-- 清晰预兆 1点
-                  {302, 1},-- 激怒 5点
-                  {302, 2},-- 激怒 5点
-                  {302, 3},-- 激怒 5点
-                  {302, 4},-- 激怒 5点
-                  {302, 5},-- 激怒 5点
-                  {306, 1},-- 强烈3点
-                  {306, 2},-- 强烈3点
-                  {306, 3},-- 强烈3点
-            }
-      end
-      if SC:GetPlayer().Class=='SHAMAN' then
-            LearnThisTalentList = {
-                  {201, 1}, --先祖知识5点
-                  {201, 2}, --先祖知识5点
-                  {201, 3}, --先祖知识5点
-                  {201, 4}, --先祖知识5点
-                  {201, 5}, --先祖知识5点
-                  {204, 1}, --雷鸣猛击5点
-                  {204, 2}, --雷鸣猛击5点
-                  {204, 3}, --雷鸣猛击5点
-                  {204, 4}, --雷鸣猛击5点
-                  {204, 5}, --雷鸣猛击5点
-                  {208, 1}, --萨满专注1点
-                  {207, 1}, --强化图腾2点
-                  {207, 2}, --强化图腾2点
-                  {205, 1}, --强化幽灵之狼2点
-                  {205, 2}, --强化幽灵之狼2点
-                  {210, 1}, --乱舞5点
-                  {210, 2}, --乱舞5点
-                  {210, 3}, --乱舞5点
-                  {210, 4}, --乱舞5点
-                  {210, 5}, --乱舞5点
-                  {214, 1}, --元素武器3点
-                  {214, 2}, --元素武器3点
-                  {214, 3}, --元素武器3点
-                  {213, 1}, --灵魂武器1点
-                  {211, 1}, --坚韧1点
-                  {216, 1}, --武器掌握5点
-                  {216, 2}, --武器掌握5点
-                  {216, 3}, --武器掌握5点
-                  {216, 4}, --武器掌握5点
-                  {216, 5}, --武器掌握5点
-                  {119, 1}, --风暴打击1点
-                  {218, 1}, --双武器1点
-                  {215, 1}, --精神敏锐3点
-                  {215, 2}, --精神敏锐3点
-                  {215, 3}, --精神敏锐3点
-                  {220, 1}, --怒火释放5点
-                  {220, 2}, --怒火释放5点
-                  {220, 3}, --怒火释放5点
-                  {220, 4}, --怒火释放5点
-                  {220, 5}, --怒火释放5点
-                  {221, 1}, --萨满之怒1点
-                  {217, 1}, --双武器专精3点
-                  {217, 2}, --双武器专精3点
-                  {217, 3}, --双武器专精3点
-                  {302, 1}, --潮汐集中5点
-                  {302, 2}, --潮汐集中5点
-                  {302, 3}, --潮汐集中5点
-                  {302, 4}, --潮汐集中5点
-                  {302, 5}, --潮汐集中5点
-                  {301, 1}, --强化治疗波5点
-                  {301, 2}, --强化治疗波5点
-                  {301, 3}, --强化治疗波5点
-                  {301, 4}, --强化治疗波5点
-                  {301, 5}, --强化治疗波5点
-                  {306, 1}, --自然指引3点
-                  {306, 2}, --自然指引3点
-                  {306, 3}, --自然指引3点
-                  {305, 1}, --图腾集中4点
-                  {305, 2}, --图腾集中4点
-                  {305, 3}, --图腾集中4点
-                  {305, 4}, --图腾集中4点
-            }
-      end
+
+      -- init()
+      initUI()
+     
+
       --如果我是猎人
       if SC:GetPlayer().Class=='HUNTER' then
          SetSettings({
@@ -1190,18 +803,22 @@ Bot:SetStart(function()
                   SetSettings({
                   AmmoAmount = 1000
             })
-            elseif SC:GetPlayer().Level >= 30 and SC:GetPlayer().Level <= 70 then --打于30级要购买弹药数量
+            elseif SC:GetPlayer().Level >= 30 and SC:GetPlayer().Level <= 80 then --打于30级要购买弹药数量
                   SetSettings({
-                  AmmoAmount = 1000
+                  AmmoAmount = 6000
             })
             end
       end
 
       --最先加载的线程初始化
       SetSettings({
+            --自动采矿
+            AutoGatherOre = false,
+            --自动采药
+            AutoGatherHerb = false,
             LearnThisTalent = LearnThisTalentList,
             --其他人的怪物打我,真为反击，假为不反击,定点挂机用
-            TapDeniedCounterattack = false,
+            TapDeniedCounterattack = true,
             --任务超时
             TimeOutEvent = true,
             --卡住事件
@@ -1221,7 +838,7 @@ Bot:SetStart(function()
             --开启可以点停止按键,点开始就是点继续,防止傻子点错,中止行程变成重新开始
             ReButtonOnClick =true,
             --设定距离障碍物范围1～5
-            agentRadius = 0.4,
+            agentRadius = 3,
             --使用食物
             UseFood = true,
             --使用饮料
@@ -1229,7 +846,7 @@ Bot:SetStart(function()
             --開啟自動休息，不吃藥
             AutoRest = false,
             --找怪范围
-            SearchRadius = 100,
+            SearchRadius = 50,
             --贩卖低于等于颜色等级的
             SellbelowLevel=false,
             --不攻击等级低于自身等级多少以下的怪物
@@ -1237,17 +854,18 @@ Bot:SetStart(function()
             --开启使用坐骑
             UseMount=true,
             --不走水路,假是不走水路,真是走水路
-            WalkWater =false,
+            WalkWater =true,
             --自动拾取
             AutoLoot = true,
             --勾选后，所有食物都吃,把包内食物/饮料吃完才会触发回城，不用设定FoodName与DrinkName
+
             EatAll = true,
             --是否判断回城事件
             GoHomeEvent = true,
             --恢复生命值范围
-            FoodPercent = {70 ,90 ,},
+           -- FoodPercent = {70 ,90 ,},
             --恢复法力值范围
-            DrinkPercent = {50 ,90 ,},
+            --DrinkPercent = {50 ,90 ,},
             --使用炉石
             UseHearthStone = false,
             --当背包空格小于等于多少时触发回城
@@ -1257,15 +875,15 @@ Bot:SetStart(function()
             --贩卖颜色等级0~8
             SellLevel = {[0] = true,[1] = true,[2] = true,},
             --不贩卖列表 
-            DoNotSellList = {'Rune of','传送','Hearthstone','炉石','Skinning Knife','剥皮小刀','Mining Pick','矿工锄','Primal','源生','Mote of','微粒','Air','空气','基尔加丹印记',"Mark of Kil'jaeden","Thieves'Tools",'潜行者工具','Flash Powder','闪光粉'},
+            DoNotSellList = {'海妖之泪','北海珍珠','繁殖期的黑水蚌','冬鳞蚌壳','雪莲花','巫妖花','金苜蓿','蛇信草','冰棘草','塔兰德拉的玫瑰','卷丹','结晶','永恒','钴矿石','药剂','法力之油','巫师之油','美味风蛇','符文法力药水','传送','炉石','剥皮小刀','矿工锄','潜行者工具','Flash Powder','闪光粉'},
             --强制贩卖列表 如果需要可以自行添加
-            --ForceSellList = {},
+            ForceSellList = {'蜜饯苔藓','冰霉果','多汁的蚌肉'},
             --强制销毁
             ForceDeleteList = {'秘教的命令','Cabal Orders','OOX','瓦希塔帕恩的羽毛',"Washte Pawne's Feather",'拉克塔曼尼的蹄子',"Hoof of Lakota'mani",'被撕破的日记','A Mangled Journal'},
             --是否反击
             Counterattack = true,
             --自动换装
-            AutoEquip = true,
+            AutoEquip = false,
             --输出信息写入Log
             WriteLog = true,
             --复活距离
@@ -1406,10 +1024,10 @@ Bot:SetStart(function()
 end)
 
 Bot:SetStop(function()
-      Log:System('=======================')
-      Log:System("自定义打怪1029")
-      Log:System("Custom Daguai 1029 starts ")
-      Log:System('=======================')
+      Log:System('脚本停止')
+     
 end)
+
+
 
 return Bot
