@@ -5,7 +5,7 @@ local Config = Bot.Config
 local TTOC = ...
 --SC为了安全可以自定义,比如BABA = TTOC ,比如YEYE = TTOC ,然后更换SC为你自定义的名字!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 SC = TTOC
-   
+player = SC:GetPlayer()
 local text = {
       {If = "SC:GetPlayer().Class == 'HUNTER'", End = '猎人恢复设置'},
       --恢复生命值范围
@@ -50,8 +50,8 @@ local text = {
       {End = '术士职业恢复设置1'},
 
       {If = "SC:GetPlayer().PetActive == true", End = '设置宠物为被动型'},
-      {Run = 'print("设置宠物为被动型")' },
-      {Run = 'PetPassiveMode()' },
+            {Run = 'print("设置宠物为被动型")' },
+            {Run = 'PetPassiveMode()' },
       {End = '设置宠物为被动型'},
 
       --如果我是法师的初始化
@@ -64,42 +64,35 @@ local text = {
             --CanCompleteQuest(QuestID,index)
             {Log='Info',Text="初始化法师战斗循环"},
             {Run = "DMW.Settings.profile.Rotation['奥术智慧'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['冰甲术/霜甲术'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['冰甲术/霜甲术'] = false"},
             {Run = "DMW.Settings.profile.Rotation['熔岩护甲'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['魔甲术'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['魔法抑制'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['法术反制'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['寒冰护体'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['魔甲术'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['魔法抑制'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['法术反制'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['寒冰护体'] = false"},
             {Run = "DMW.Settings.profile.Rotation['法力护盾'] = true"},
             {Run = "DMW.Settings.profile.Rotation['生命低于'] = 20"},
             {Run = "DMW.Settings.profile.Rotation['智能拉怪'] = 2"},
-            {If = "SC:GetPlayer().Level >= 4", End = 30},
-            {Run = "DMW.Settings.profile.Rotation['寒冰箭'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['大火球'] = false"},
-            {End = 30},
-            {If = "SC:GetPlayer().Level < 4", End = 31},
-            {Run = "DMW.Settings.profile.Rotation['寒冰箭'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['大火球'] = true"},
-            {End = 31},
             {Run = "DMW.Settings.profile.Rotation['炎爆术'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['寒冰箭'] = false"},
             {Run = "DMW.Settings.profile.Rotation['召唤水元素'] = true"},
             {Run = "DMW.Settings.profile.Rotation['火焰冲击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['冲击波'] = false"},
             {Run = "DMW.Settings.profile.Rotation['燃烧'] = false"},
             {Run = "DMW.Settings.profile.Rotation['灼烧'] = false"},
             {Run = "DMW.Settings.profile.Rotation['冰霜新星'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['冰霜新星时后退'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['冰霜新星时后退'] = false"},
             {Run = "DMW.Settings.profile.Rotation['水元素冰霜新星'] = true"},
             {Run = "DMW.Settings.profile.Rotation['宠物自动攻击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['让宠物自动攻击目标'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['冰锥术'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['冰锥术'] = true"},
             {Run = "DMW.Settings.profile.Rotation['龙息术'] = false"},
             {Run = "DMW.Settings.profile.Rotation['冰枪术'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['奥术飞弹'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['急速冷却'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['急速冷却生命低于'] = 45"},
+            {Run = "DMW.Settings.profile.Rotation['奥术飞弹'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['急速冷却'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['急速冷却生命低于'] = 99"},
             {Run = "DMW.Settings.profile.Rotation['冰冷血脉'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['冰冷血脉生命低于'] = 90"},
+            {Run = "DMW.Settings.profile.Rotation['冰冷血脉生命低于'] = 100"},
             {Run = "DMW.Settings.profile.Rotation['造水术'] = true"},
             {Run = "DMW.Settings.profile.Rotation['造食术'] = true"},
             {Run = "DMW.Settings.profile.Rotation['唤醒'] = true"},
@@ -112,7 +105,7 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['法力分流法力值百分比'] = 80"},
 	      {Run = "DMW.Settings.profile.Rotation['奥术洪流'] = true"},
             {Run = "DMW.Settings.profile.Rotation['狂暴'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['狂暴生命值'] = 90"},
+            {Run = "DMW.Settings.profile.Rotation['狂暴生命值'] = 100"},
             {Log='Info',Text="初始化完成"},
       {End = 0},
 
@@ -158,13 +151,13 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['目标是宠物时拉开距离'] = true"},
             {Run = "DMW.Settings.profile.Rotation['自动雄鹰守护'] = true"},
             {Run = "DMW.Settings.profile.Rotation['自动灵猴守护'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['多重射击'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['多重射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['奥术射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['猎人印记'] = true"},
             {Run = "DMW.Settings.profile.Rotation['急速射击'] = true"},
             {Run = "DMW.Settings.profile.Rotation['瞄准射击'] = false"},
             {Run = "DMW.Settings.profile.Rotation['稳固射击'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['逃脱'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['逃脱'] = false"},
             {Run = "DMW.Settings.profile.Rotation['假死'] = true"},
             {Run = "DMW.Settings.profile.Rotation['狂野怒火'] = true"},
             {Run = "DMW.Settings.profile.Rotation['猛禽一击'] = true"},
@@ -254,7 +247,8 @@ local text = {
             --CanCompleteQuest(QuestID,index)
             {Log='Info',Text="初始化术士战斗循环"},
             {Run = "DMW.Settings.profile.Rotation['自动Buff'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['邪甲术'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['魔息术'] = true"},
+            {Run = "DMW.Settings.profile.Rotation['邪甲术'] = true"},
             {Run = "DMW.Settings.profile.Rotation['制造治疗石'] = true"},
             {Run = "DMW.Settings.profile.Rotation['制造灵魂石'] = true"},
             {Run = "DMW.Settings.profile.Rotation['绑定灵魂石'] = true"},
@@ -290,12 +284,13 @@ local text = {
             {Run = "DMW.Settings.profile.Rotation['生命虹吸'] = false"},
             {Run = "DMW.Settings.profile.Rotation['轮流生命虹吸'] = false"},
             {Run = "DMW.Settings.profile.Rotation['暗影灼烧'] = false"},
-            {Run = "DMW.Settings.profile.Rotation['吸取生命二'] = false"},
+            {Run = "DMW.Settings.profile.Rotation['吸取生命二'] = true"},
             {Run = "DMW.Settings.profile.Rotation['烧尽'] = true"},
             {Run = "DMW.Settings.profile.Rotation['痛苦无常'] = false"},
             {Run = "DMW.Settings.profile.Rotation['腐蚀之种子'] = true"},
             {Run = "DMW.Settings.profile.Rotation['吸取生命'] = true"},
-            {Run = "DMW.Settings.profile.Rotation['吸取生命生命值'] = 90"},
+            {Run = "DMW.Settings.profile.Rotation['吸取生命生命值'] = 100"},
+            {Run = "DMW.Settings.profile.Rotation['吸取生命生命值二'] = 100"},
             {Run = "DMW.Settings.profile.Rotation['生命通道'] = true"},
             {Run = "DMW.Settings.profile.Rotation['生命通道宠物HP'] = 50"},
             {Run = "DMW.Settings.profile.Rotation['暗影防护结界'] = true"},
@@ -630,10 +625,14 @@ local LT = {
             local itemBuffMap = {
                   ['特效敏捷药剂'] = '特效敏捷' ,
                   ['极效敏捷药剂'] = '极效敏捷' ,
+                  ['极效力量药剂'] = '强效力量' ,
+                  ['极效坚韧药剂'] = '极效坚韧药剂' ,
                   ['法术能量药剂'] = '法能药剂' ,
                   ['法能药剂'] = '法能药剂' ,
                   ['特效魔血药剂'] = '强效法力回复' ,
-                  ['极效魔血药剂'] = '强效法力回复'  
+                  ['极效魔血药剂'] = '强效法力回复',
+                  ['水下呼吸药剂'] = '水下呼吸',
+                  ['强力水下呼吸药剂'] = '强效水下呼吸'  
             }
             local buffName;
             for key, value in pairs(itemBuffMap) do
@@ -659,7 +658,7 @@ local LT = {
                   return
              end
             local hasEnchant,_ = GetWeaponEnchantInfo()
-            if(not hasEnchant and not SC:GetPlayer().InCombat and not  SC:GetPlayer().IsDead ) then
+            if(GetItemCount(itemName,false,false)>0 and not hasEnchant and not SC:GetPlayer().InCombat and not  SC:GetPlayer().IsDead ) then
                   print("使用武器附魔["..itemName..']')
                   RunMacroText('/use [button:1] '..itemName)
                   RunMacroText('/use [button:1] 16')
@@ -676,13 +675,59 @@ local LT = {
       使用背包里的BUFF物品
 --]]
 local function useBuff()
+      LT.useBuffItem(UI:Setting('呼吸药剂'))
       LT.useBuffItem(UI:Setting('战斗药剂'))
       LT.useBuffItem(UI:Setting('守护药剂'))
       LT.addWeaponEnchant(UI:Setting('武器涂油'))
 end
 
-local mainScript = {
+local function init()
+
+      local u = SC:GetPlayer()
+      print(u)
+    
+     for index,item in pairs(u) do 
+         print(index)
+     end
+   
      
+end
+
+
+
+
+local mainScript = {
+      {If = "player.mapName == '奥格瑞玛'", End = '去线上'},
+            --关闭传送通知
+            {Run='TPCheck(false)'},
+            {Run='UseMount()'},
+            {Log='Debug',Text="去北风苔原"},
+            {MoveTo = {1171.4137, -4153.6914, 51.6459,true},},
+            {UnitInteract = 26537},
+            {Delay = 5},
+            {Run='SelectGossipOption(1)'},
+            {Delay = 10},
+
+            {Log='Debug',Text="去坐电梯"},
+            --去电梯等待电梯
+            {MoveTo = {2869.2615, 6215.2651, 104.2845},},
+            --下电梯坐标
+            {TakeTransport = 153, DownPath = {2901.7642, 6237.9883, 208.8468},},
+
+            {Log='Debug',Text="坐鸟点飞去博古洛克岗哨"},
+            {MoveTo = {2919.5181, 6243.0615, 208.8024},},
+            --与计程车NPC对话
+            {UnitInteract = 25288},
+            {Delay = 1},
+            --选择要空运的选项
+            {Gossip = "taxi"},
+            --搭车
+            {Taxi = 18046},
+            --等待2秒
+            {Delay = 2},
+            {Run='UseMount()'},
+      {Loop = '去线上'},
+
       --大于1级小于71级循环打怪
       {If = "SC:GetPlayer().Level >= 1 and SC:GetPlayer().Level <= 80", End = '自定义打怪'},
             {Run = function ()
@@ -690,7 +735,7 @@ local mainScript = {
             end},
             {If = "GetItemCount('冬鳞蚌壳',false,false)>=100", End = '购买海妖之泪'},
                   {Run = 'print("购买海妖之泪")'},
-                  {MoveTo = {4366.9658, 6089.8257, 0.6821},},
+                  {MoveTo = {4366.9658, 6089.8257, 0.6821,true},},
                   {UnitInteract = 25206},
                   {Gossip = "vendor"},
                   {Run='BuyItem(36784,1)'},
@@ -706,8 +751,8 @@ local mainScript = {
             },},
             --离开家路径避免卡位 如果离开家时候卡位用
             {Settings = 'LeaveHomePath', value = {
-                  --{4383.1143, 6129.1177, 0.4630},
-
+                  {4284.3032, 5865.4443, 59.3179},
+                 --{4319.2847, 6061.2754, 0.9000},
             },},
             {Settings = 'BuyNPC', value = {
                   --修装的
@@ -719,71 +764,68 @@ local mainScript = {
             }},
             --是否判断回城事件
             {Settings = 'GoHomeEvent', value = true},
-             --采集循环设置
-             {GatherHerb = {187367} , Count = 1 ,Distance=10, --0000,0000是要打的怪物id
-                  MoveTo = {--0000.0000,0000.0000,0000.0000 是要巡逻的坐标
-                  { { 4250.4038, 6185.3359, 0.6984 }, },
-                  { { 4241.3247, 6187.3286, 1.0958 }, },
-                  { { 4234.2134, 6188.1484, 1.0250 }, },
-                  { { 4229.1362, 6187.5894, 0.9832 }, },
-                  { { 4219.2373, 6181.0669, 1.3534 }, },
-                  { { 4211.0688, 6173.8921, 1.3919 }, },
-                  { { 4201.5537, 6169.2183, 1.4218 }, },
-                  { { 4216.1675, 6188.9385, 1.9889 }, },
-                  { { 4202.5361, 6194.2070, 6.1287 }, },
-                  { { 4171.0122, 6178.1338, 9.2669 }, },
-                  { { 4170.5215, 6192.3027, 9.2519 }, },
-                  { { 4181.9331, 6243.9795, 8.3435 }, },
-                  { { 4184.4902, 6255.9023, 8.4895 }, },
-                  { { 4248.2598, 6251.5518, 0.3334 }, },
-                  { { 4282.3594, 6205.5078, 0.6767 }, },
-                  { { 4301.7251, 6204.8555, 0.5574 }, },
-                  { { 4298.7607, 6234.3857, 0.5242 }, },
-                  { { 4290.7104, 6253.0044, 0.6384 }, },
-                  { { 4278.0835, 6292.6157, 0.1419 }, },
-                  { { 4293.5254, 6313.3252, 0.5616 }, },
-                  { { 4290.5107, 6356.9829, 0.3639 }, },
-                  { { 4305.6797, 6408.5181, 0.5700 }, },
-                  { { 4327.9561, 6442.0479, 0.0472 }, },
-                  { { 4300.6494, 6438.6650, 0.5659 }, },
-                  { { 4283.3623, 6406.7554, 0.5689 }, },
-                  { { 4272.2905, 6394.8896, 0.5674 }, },
-                  { { 4222.6812, 6321.0796, 5.7414 }, },
-                  { { 4193.1689, 6311.1196, 13.2315 }, },
-                  { { 4157.0649, 6281.3110, 30.7814 }, },
-                  { { 4145.7910, 6252.9414, 30.6839 }, },
-                  { { 4090.9592, 6285.0493, 27.2829 }, },
-                  { { 4083.6282, 6275.4590, 27.4914 }, },
-                  { { 4056.1245, 6268.6729, 22.1957 }, },
-                  { { 4010.9192, 6390.3052, 29.9094 }, },
-                  { { 4025.8748, 6326.7397, 8.7198 }, },
-                  { { 4033.3308, 6297.6479, 5.3709 }, },
-                  { { 4017.3389, 6284.0781, 6.9881 }, },
-                  { { 3984.3914, 6307.9385, 8.0829 }, },
-                  { { 4036.7007, 6456.9497, 21.0112 }, },
-                  { { 4009.1113, 6467.9780, 22.3454 }, },
-                  { { 3978.8518, 6451.9033, 15.0399 }, },
-                  { { 3938.8562, 6393.4121, 11.3477 }, },
-                  { { 3944.5874, 6371.3555, 11.4117 }, },
 
-                  }, Random = 0 ,FindPath =true,
-             },       
+            --采集循环设置
+            {GatherHerb = {187367} , Count = 1 ,Distance = 10,
+		MoveTo = {--如果找不到怪就移动，详见上面的MoveTo
+            { { 4270.7437, 6194.5083, 0.4861 }, },
+            { { 4297.6821, 6194.1895, 0.3576 }, },
+            { { 4289.5386, 6204.7554, 0.6731 }, },
+            { { 4295.7637, 6215.2500, 0.6988 }, },
+            { { 4309.6265, 6209.2192, 0.4673 }, },
+            -- { { 4299.7822, 6241.3491, 0.2909 }, },
+            { { 4290.5215, 6243.6152, 0.5979 }, },
+            { { 4294.7310, 6260.1509, 0.6605 }, },
+            { { 4290.7505, 6288.1646, 0.5576 }, },
+            { { 4279.5713, 6290.9336, 0.2116 }, },
+            { { 4278.5728, 6302.9287, 0.2176 }, },
+            { { 4305.3540, 6307.5547, 0.5349 }, },
+            { { 4318.8696, 6322.9150, 0.5349 }, },
+            { { 4322.8931, 6322.2627, 0.5349 }, },
+            { { 4314.3438, 6371.5557, 0.5670 }, },
+            { { 4309.9751, 6406.6738, 0.5679 }, },
+            { { 4294.9570, 6439.1938, 0.5568 }, },
+            { { 4286.7480, 6410.1543, 0.5969 }, },
+            { { 4280.3267, 6398.1592, 0.5671 }, },
+            { { 4287.2354, 6364.0981, 0.5671 }, },
+            { { 4273.8906, 6352.3135, 0.5671 }, },
+            { { 4263.4468, 6342.8989, 0.5671 }, },
+            { { 4260.4644, 6340.1338, 0.5671 }, },
+            { { 4231.0469, 6290.8003, -0.8347 }, },
+            { { 4248.5552, 6256.9561, 0.5675 }, },
+            { { 4240.3433, 6229.6646, 0.5641 }, },
+            { { 4235.0737, 6224.3564, 0.5625 }, },
+            { { 4222.7661, 6223.8730, 1.3271 }, },
+            { { 4216.4824, 6232.6328, 2.6672 }, },
+            { { 4221.7778, 6241.4492, 8.7791 }, },
+            { { 4198.1890, 6311.0098, 13.2303 }, },
+            { { 4188.7915, 6307.5776, 13.2303 }, },
+            { { 4151.2319, 6280.9795, 30.4905 }, },
+            { { 4087.3438, 6282.2939, 27.4374 }, },
+            { { 4080.7500, 6273.9644, 27.2913 }, },
+            { { 4056.5251, 6266.2622, 21.8774 }, },
+            { { 4017.7920, 6385.5566, 30.1225 }, },
+            { { 4008.8875, 6393.7598, 29.1038 }, },
+            { { 4146.9629, 6253.4146, 30.7153 }, },
+               {{ 4172.0396, 6196.5103, 9.2521},},    
+               {{4169.7939, 6181.6875, 9.2562},}, 
+               {{4173.4604, 6173.0708, 9.2520},}, 
+               {{4197.0918, 6170.2002, 1.4364},}, 
+               {{4219.8506, 6177.3013, 1.2870},}, 
+               {{4237.1089, 6178.7686, 0.0868},},      
+               {{4250.0449, 6181.1831, 0.4391},},  
+		}, Random = 0 ,FindPath =true,
+		
+		},
+
+           
+           
       {Loop = '自定义打怪'},
 
       
 }
 
 
-local function init()
---       local u = SC:GetPlayer().Buffs
-     
-    
---      for index,item in pairs(u) do 
---          print(index)
---      end
-
-      
-end
 -- 初始化界面
 local function initUI()
       if not UI:GetWidget('基本配置')then
@@ -791,6 +833,7 @@ local function initUI()
             UI:AddInput('战斗药剂')
             UI:AddInput('守护药剂') 
             UI:AddInput('武器涂油') 
+            UI:AddInput('呼吸药剂') 
       end
 end
 --加入脚本
@@ -812,7 +855,8 @@ Bot:SetStart(function()
       SetDMWHUD('Rotation',true) --DMW
       local LearnThisTalentList = {}
 
-      -- init()
+      
+      
       initUI()
      
 
@@ -874,18 +918,25 @@ Bot:SetStart(function()
             AutoRest = false,
             --找怪范围
             SearchRadius = 50,
+            --采矿范围
+            GatherOreRadius = 200,
+             --采药范围
+            GatherHerbRadius = 200,
             --贩卖低于等于颜色等级的
             SellbelowLevel=false,
             --不攻击等级低于自身等级多少以下的怪物
             NotAttackFewLevelsMonster= 5,
             --开启使用坐骑
-            UseMount=true,
+            --UseMount=false,
             --不走水路,假是不走水路,真是走水路
             WalkWater =true,
             --自动拾取
             AutoLoot = true,
             --勾选后，所有食物都吃,把包内食物/饮料吃完才会触发回城，不用设定FoodName与DrinkName
-
+            GatherBlackList = {
+                  --['进乌龟壳后踩不到的那个蚌壳'] = {4333.3457, 6359.6763, -4.1122},
+                  ['进乌龟壳后踩不到，这个蚌壳别采集'] = {4335.4243, 6375.0352, -1.8629},
+            },
             EatAll = true,
             --是否判断回城事件
             GoHomeEvent = true,
@@ -900,7 +951,7 @@ Bot:SetStart(function()
             --当装备耐久度小于等于%多少时触发回城
             MinDurabilityPercent = 20,
             --贩卖颜色等级0~8
-            SellLevel = {[0] = true,[1] = true,[2] = true,},
+            SellLevel = {[0] = true,[1] = true,[2] = true,[3] = false,[4] = false,},
             --不贩卖列表 
             DoNotSellList = {'海妖之泪','北海珍珠','繁殖期的黑水蚌','冬鳞蚌壳','雪莲花','巫妖花','金苜蓿','蛇信草','冰棘草','塔兰德拉的玫瑰','卷丹','结晶','永恒','钴矿石','药剂','法力之油','巫师之油','美味风蛇','符文法力药水','传送','炉石','剥皮小刀','矿工锄','潜行者工具','Flash Powder','闪光粉'},
             --强制贩卖列表 如果需要可以自行添加
